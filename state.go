@@ -25,7 +25,7 @@ type state struct {
 
 func (s *state) setChunkFile(file *os.File) {
 	if s.chunkFile != nil {
-		s.chunkFile.Close()
+		_ = s.chunkFile.Close()
 	}
 	s.chunkFile = file
 }

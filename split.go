@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"path/filepath"
 	"strconv"
 	"strings"
 )
@@ -169,14 +170,11 @@ func saveBulkToFile(st *state) error {
 
 //getFileName extracts name and extension from path
 func getFileName(path string) (string, string) {
-	split := strings.Split(path, "/")
-	name := split[len(split)-1]
-	split = strings.Split(name, ".")
-	ext := split[len(split)-1]
-	nSplit := split[:len(split)-1]
-	name = strings.Join(nSplit, "")
-
-	return name, ext
+	filenameArr := strings.Split(filepath.Base(path), ".")
+	if len(filenameArr) == 2 {
+		return filenameArr[0], filenameArr[1]
+	}
+	return filenameArr[0], ""
 }
 
 //prepareResultDirPath adds '/' to the end of path if needed
@@ -184,10 +182,9 @@ func prepareResultDirPath(path string) string {
 	if path == "" {
 		return ""
 	}
-	p := []byte(path)
-	if p[len(p)-1] != '/' {
-		p = append(p, '/')
+	// if the last char of the path is already a slash then quit early
+	if path[len(path)-1] == os.PathSeparator {
+		return path
 	}
-
-	return string(p)
+	return path + string(os.PathSeparator)
 }
