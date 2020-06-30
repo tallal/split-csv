@@ -37,6 +37,14 @@ func New() Splitter {
 	}
 }
 
+func closeFile(f *os.File) {
+	err := f.Close()
+	if err != nil {
+		_, _ = fmt.Fprintf(os.Stderr, "error: %v\n", err)
+		os.Exit(1)
+	}
+}
+
 //Split splits file in smaller chunks
 func (s Splitter) Split(inputFilePath string, outputDirPath string) ([]string, error) {
 	if s.FileChunkSize < minFileChunkSize {
@@ -47,7 +55,8 @@ func (s Splitter) Split(inputFilePath string, outputDirPath string) ([]string, e
 		msg := fmt.Sprintf("Couldn't open file %s : %v", inputFilePath, err)
 		return nil, errors.New(msg)
 	}
-	defer file.Close()
+	defer closeFile(file)
+
 	stat, err := file.Stat()
 	if err != nil {
 		msg := fmt.Sprintf("Couldn't get file stat %s : %v", inputFilePath, err)
@@ -102,7 +111,7 @@ func (s Splitter) Split(inputFilePath string, outputDirPath string) ([]string, e
 			return nil, err
 		}
 	}
-	st.chunkFile.Close()
+	closeFile(st.chunkFile)
 
 	return st.result, nil
 }

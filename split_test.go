@@ -90,12 +90,12 @@ func assertResult(t *testing.T, result []string, expected []string) {
 		if err != nil {
 			t.Error(err)
 		}
-		defer fileActual.Close()
+
 		fileExp, err := os.Open(item + ".expected")
 		if err != nil {
 			t.Error(err)
 		}
-		defer fileExp.Close()
+
 		statActual, err := fileActual.Stat()
 		if err != nil {
 			t.Error(err)
@@ -105,6 +105,9 @@ func assertResult(t *testing.T, result []string, expected []string) {
 			t.Error(err)
 		}
 		assert.Equal(t, statExp.Size(), statActual.Size())
+
+		closeFile(fileActual)
+		closeFile(fileExp)
 	}
 
 	assert.Equal(t, expected, result)
