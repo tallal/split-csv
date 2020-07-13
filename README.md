@@ -9,10 +9,12 @@ Fast and efficient Golang package for splitting large csv files on smaller chunk
 - Allocates minimum memory.
 - Configurable destination folder.
 - Disabling/enabling of copying a header in chunk files.
+- works with windows paths e.g. c:\temp\
+- works with NFS paths e.g. \\server\share
 
 ## Installation
 
-Install (original repo):
+### Install (original repo):
 
 ```shell
 go get -u github.com/tolik505/split-csv
@@ -24,7 +26,7 @@ Import:
 import splitCsv "github.com/tolik505/split-csv"
 ```
 
-Install (updated repo):
+### Install (this repo):
 
 ```shell
 go get -u github.com/tallal/split-csv
