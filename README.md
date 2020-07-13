@@ -12,7 +12,7 @@ Fast and efficient Golang package for splitting large csv files on smaller chunk
 
 ## Installation
 
-Install:
+Install (original repo):
 
 ```shell
 go get -u github.com/tolik505/split-csv
@@ -23,6 +23,19 @@ Import:
 ```go
 import splitCsv "github.com/tolik505/split-csv"
 ```
+
+Install (updated repo):
+
+```shell
+go get -u github.com/tallal/split-csv
+```
+
+Import:
+
+```go
+import splitCsv "github.com/tallal/split-csv"
+```
+
 
 ## Quickstart
 
